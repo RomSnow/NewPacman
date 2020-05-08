@@ -27,8 +27,8 @@ namespace Pacman.Tests
         {
             var fieldString =
                 @"#####
-                  #.P.#
-                  #####";
+#.P.#
+#####";
 
             var normalField = new FieldItem[,]
                 {
