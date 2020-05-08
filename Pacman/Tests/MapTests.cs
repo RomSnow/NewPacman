@@ -32,16 +32,16 @@ namespace Pacman.Tests
 
             var normalField = new FieldItem[,]
                 {
-                    {new Wall(), new Wall(), new Wall(), new Wall(), new Wall()}, 
+                    {new Wall(), new Wall(), new Wall(), new Wall(), new Wall()},
                     {new Wall(), new Coin(new Map(),  new Point()), new Player(new Map(), new Point()), new Coin(new Map(),new Point()), new Wall()},
                     {new Wall(), new Wall(), new Wall(), new Wall(), new Wall()}
                 };
 
             var m = new Map(fieldString, 0).Field;
-            
+
             for (var i = 0; i < normalField.GetLength(0); i++)
                 for (var j = 0; j < normalField.GetLength(1); j++)
-                    Assert.True(normalField[i,j].GetType() == m[i, j].GetType());
+                    Assert.True(normalField[i, j].GetType() == m[i, j].GetType());
         }
 
         [Test]
@@ -164,6 +164,45 @@ namespace Pacman.Tests
             map.Update(MoveDirection.Down);
             map.Update();
             Assert.AreEqual(finalMap, map.ToString());
+        }
+
+        [Test]
+        public static void DoesTwoGhostsPursuePlayer()
+        {
+            var mapString = "###########\n" +
+                            "#G       G#\n" +
+                            "## ##### ##\n" +
+                            "## ##### ##\n" +
+                            "##   P   ##\n" +
+                            "###########\n";
+            var finalMap = "###########\n" +
+                           "#         #\n" +
+                           "## ##### ##\n" +
+                           "##G#####G##\n" +
+                           "##   P   ##\n" +
+                           "###########";
+            var map = new Map(mapString, 3);
+            map.IsAttackMode = true;
+            map.Update(MoveDirection.Down);
+            map.Update();
+            map.Update();
+            Assert.AreEqual(finalMap, map.ToString());
+        }
+
+        [Test]
+        public static void DoesPlayerCollectBigCoinAndEatGhost()
+        {
+            var mapString = "#######\n" +
+                            "#P*  G#\n" +
+                            "#######";
+            var finalMap = "#######\n" +
+                           "#  P  #\n" +
+                           "#######";
+            var map = new Map(mapString, 3);
+            map.Update(MoveDirection.Right);
+            map.Update();
+            Assert.AreEqual(finalMap, map.ToString());
+            Assert.AreEqual(400, map.Score);
         }
     }
 }

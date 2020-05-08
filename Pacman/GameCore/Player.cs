@@ -86,17 +86,17 @@ namespace Pacman.GameCore
             }
             if (obj is Ghost)
             {
-                if (!map.IsPlayerBoost)
+                var ghost = (Ghost)obj;
+                if (!map.IsPlayerBoost && ghost.IsGhostAlive)
                 {
                     map.HealthPoints -= 1;
                     map.Field[location.Y, location.X] = obj;
                     location = map.RespawnPoint;
                     map.Field[location.Y, location.X] = this;
                 }
-                else
+                else if (ghost.IsGhostAlive)
                 {
                     map.Score += 200;
-                    var ghost = (Ghost)obj;
                     ghost.IsGhostAlive = false;
                     map.Field[location.Y, location.X] = this;
                 }
