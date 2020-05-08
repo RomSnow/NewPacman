@@ -10,6 +10,18 @@ namespace Pacman.Tests
     [TestFixture]
     public static class MapTests
     {
+        private static Dictionary<char, Func<Map, Point, FieldItem>> convertDict =
+               new Dictionary<char, Func<Map, Point, FieldItem>>()
+               {
+                {'P', (Map map, Point point) => new Player(map, point)},
+                {'#', (map, point) => new Wall()},
+                {'G', (Map map, Point point) => new Ghost(map, point)},
+                {'.', (Map map, Point point) => new Coin(map, point)},
+                {'*', (Map map, Point point) => new BigCoin(map, point)},
+                {'R', (Map map, Point point) => new Respawn(point)},
+                {' ', (Map map, Point point) => new Empty()}
+               };
+
         [Test]
         public static void TestMapCreator()
         {

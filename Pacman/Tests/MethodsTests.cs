@@ -43,6 +43,7 @@ namespace Pacman.Tests
             finalList = new SinglyLinkedList<Point>(new Point(3, 1), finalList);
             finalList = new SinglyLinkedList<Point>(new Point(4, 1), finalList);
             finalList = new SinglyLinkedList<Point>(new Point(4, 2), finalList);
+            var lol = result.ToList();
             Assert.AreEqual(finalList, result);
         }
     }

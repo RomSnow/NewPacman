@@ -19,7 +19,7 @@ namespace Pacman.GameCore
         public Point RespawnPoint { get; private set; }
         public int EnemyCount { get; set; }
         public bool IsPlayerBoost { get; set; }
-        public bool IsAttackMode { get; set }
+        public bool IsAttackMode { get; set; }
 
         private Dictionary<char, Func<Map, Point, FieldItem>> convertDict = 
             new Dictionary<char, Func<Map, Point, FieldItem>>()
@@ -33,7 +33,7 @@ namespace Pacman.GameCore
                 {' ', (Map map, Point point) => new Empty()}
             };
 
-        private Player player;
+        public Player player;
 
         private List<IMovable> persons;
 
@@ -43,12 +43,12 @@ namespace Pacman.GameCore
         {
             CoinsLocations = new HashSet<Point>();
             BigCoinsLocations = new HashSet<Point>();
+            IsAttackMode = false;
             IsGameOver = false;
             Score = 0;
             HealthPoints = healthPoints;
             persons = new List<IMovable>();
             Field = CreateFieldByString(fieldString);
-            IsAttackMode = false;
         }
 
         public void Update()

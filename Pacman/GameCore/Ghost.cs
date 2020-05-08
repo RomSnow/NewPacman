@@ -63,26 +63,41 @@ namespace Pacman.GameCore
             if (direction == MoveDirection.Right &&
                 map.Field[(int)location.Y, (int)location.X + 1] is Wall)
             {
-                direction = ChooseFreeWayRandom(map.Field, location, direction);
+                if (map.IsAttackMode)
+                    direction = ChooseWayToPacman(map.Field, location, direction);
+                else
+                    direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (direction == MoveDirection.Left &&
                 map.Field[(int)location.Y, (int)location.X - 1] is Wall)
             {
-                direction = ChooseFreeWayRandom(map.Field, location, direction);
+                if (map.IsAttackMode)
+                    direction = ChooseWayToPacman(map.Field, location, direction);
+                else
+                    direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (direction == MoveDirection.Down &&
                 map.Field[(int)location.Y + 1, (int)location.X] is Wall)
             {
-                direction = ChooseFreeWayRandom(map.Field, location, direction);
+                if (map.IsAttackMode)
+                    direction = ChooseWayToPacman(map.Field, location, direction);
+                else
+                    direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (direction == MoveDirection.Up &&
                 map.Field[(int)location.Y - 1, (int)location.X] is Wall)
             {
-                direction = ChooseFreeWayRandom(map.Field, location, direction);
+                if (map.IsAttackMode)
+                    direction = ChooseWayToPacman(map.Field, location, direction);
+                else
+                    direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (MakeListOfFreeWays(map.Field, location).Count > 2)
             {
-                direction = ChooseFreeWayRandom(map.Field, location, direction);
+                if (map.IsAttackMode)
+                    direction = ChooseWayToPacman(map.Field, location, direction);
+                else
+                    direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
         }
 
@@ -94,6 +109,14 @@ namespace Pacman.GameCore
             var r = new Random();
             var number = r.Next(listOfWays.Count);
             return listOfWays.Skip(number).FirstOrDefault();
+        }
+
+        public MoveDirection ChooseWayToPacman(FieldItem[,] field,
+            Point point, MoveDirection direction)
+        {
+            var path = Searcher.SearchWayToPlayer(field, location, map.player.GetLocation());
+            var nextStep = path.Previous.Value;
+            return MakeDirection(new Point(nextStep.X - location.X, nextStep.Y - location.Y));
         }
 
         private List<MoveDirection> MakeListOfFreeWays(FieldItem[,] field,
