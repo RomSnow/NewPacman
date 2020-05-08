@@ -76,12 +76,11 @@ namespace Pacman.Tests
                             "#  R#\n" +
                             "#####\n";
             var finalMap = "#####\n" +
-                           "#  G#\n" +
+                           "# G #\n" +
                            "#  P#\n" +
                            "#####";
             var map = new Map(mapString, 2);
             map.Update(MoveDirection.Left);
-            map.Update();
             Assert.AreEqual(finalMap, map.ToString());
             Assert.AreEqual(1, map.HealthPoints);
         }

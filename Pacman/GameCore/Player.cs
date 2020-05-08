@@ -8,7 +8,7 @@ namespace Pacman.GameCore
     public class Player : FieldItem, IPlayer
     {
         public MoveDirection direction;
-        private Point location;
+        public Point location;
         private Map map;
         private int timeToEndboost;
         private HashSet<Point> coinsLocations;
@@ -75,7 +75,7 @@ namespace Pacman.GameCore
             if (obj is Coin)
             {
                 map.Score += 50;
-                map.CoinsLocations.Remove(location);
+                coinsLocations.Remove(location);
             }
             if (obj is BigCoin)
             {
@@ -89,11 +89,16 @@ namespace Pacman.GameCore
                 if (!map.IsPlayerBoost)
                 {
                     map.HealthPoints -= 1;
+                    map.Field[location.Y, location.X] = obj;
                     location = map.RespawnPoint;
+                    map.Field[location.Y, location.X] = this;
                 }
                 else
                 {
                     map.Score += 200;
+                    var ghost = (Ghost)obj;
+                    ghost.IsGhostAlive = false;
+                    map.Field[location.Y, location.X] = this;
                 }
             }
         }

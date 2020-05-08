@@ -9,7 +9,7 @@ namespace Pacman.GameCore
 {
     public class Ghost : FieldItem, IMovable
     {
-        private bool IsGhostAlive { get; set; }
+        public bool IsGhostAlive { get; set; }
         private Map map;
         private Point location;
         private MoveDirection direction;
@@ -95,7 +95,7 @@ namespace Pacman.GameCore
                     }
                 }
             var r = new Random();
-            var number = r.Next(0, listOfWays.Count - 1);
+            var number = r.Next(listOfWays.Count);
             return listOfWays.Skip(number).FirstOrDefault();
         }
 
@@ -116,6 +116,16 @@ namespace Pacman.GameCore
             if (obj is Player && map.IsPlayerBoost && IsGhostAlive)
             {
                 IsGhostAlive = false;
+                map.Field[location.Y, location.X] = obj;
+                map.Score += 200;
+            }
+            else if (obj is Player && !map.IsPlayerBoost && IsGhostAlive)
+            {
+                map.HealthPoints -= 1;
+                var player = (Player)obj;
+                player.location = map.RespawnPoint;
+                map.Field[player.location.Y, player.location.X] = obj;
+                map.Field[location.Y, location.X] = this;
             }
         }
 

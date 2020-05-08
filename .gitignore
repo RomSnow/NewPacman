@@ -3,3 +3,13 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+/.vs/NewPacman/v16/.suo
+/.vs/NewPacman/v16/TestStore/0/000.testlog
+/.vs/NewPacman/v16/TestStore/0/testlog.manifest
+/.vs/Pacman/DesignTimeBuild/.dtbcache.v2
+/.vs/Pacman/v16/.suo
+/.vs/Pacman/v16/TestStore/0/000.testlog
+/.vs/Pacman/v16/TestStore/0/testlog.manifest
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/Pacman/Pacman.csproj.user
