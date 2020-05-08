@@ -10,25 +10,13 @@ namespace Pacman.Tests
     [TestFixture]
     public static class MapTests
     {
-        private static Dictionary<char, Func<Map, Point, FieldItem>> converDict = 
-            new Dictionary<char, Func<Map, Point, FieldItem>>()
-        {
-            {'P', (Map map, Point point) => new Player(map, point)},
-            {'#', (map, point) => new Wall()},
-            {'G', (Map map, Point point) => new Ghost(map, point)},
-            {'.', (Map map, Point point) => new Coin(map, point)},
-            {'*', (Map map, Point point) => new BigCoin(map, point)},
-            {'R', (Map map, Point point) => new Respawn(point)},
-            {' ', (Map map, Point point) => new Empty()}
-        };
-
         [Test]
         public static void TestMapCreator()
         {
             var fieldString =
                 @"#####
-#.P.#
-#####";
+                  #.P.#
+                  #####";
 
             var normalField = new FieldItem[,]
                 {
@@ -65,7 +53,19 @@ namespace Pacman.Tests
             map.Update(MoveDirection.Left);
             map.Update();
             Assert.AreEqual(finalMapString, map.ToString());
-            
+        }
+
+        [Test]
+        public static void DoesPlayerGetScore()
+        {
+            var mapString = "#####\n" +
+                            "#..P#\n" +
+                            "#####\n";
+            var map = new Map(mapString, 1);
+            map.Update(MoveDirection.Left);
+            map.Update();
+            Assert.AreEqual(100, map.Score);
+
         }
 
         [Test]

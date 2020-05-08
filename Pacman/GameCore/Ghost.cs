@@ -63,26 +63,41 @@ namespace Pacman.GameCore
             if (direction == MoveDirection.Right &&
                 map.Field[(int)location.Y, (int)location.X + 1] is Wall)
             {
-                direction = ChooseFreeWay(map.Field, location);
+                direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (direction == MoveDirection.Left &&
                 map.Field[(int)location.Y, (int)location.X - 1] is Wall)
             {
-                direction = ChooseFreeWay(map.Field, location);
+                direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (direction == MoveDirection.Down &&
                 map.Field[(int)location.Y + 1, (int)location.X] is Wall)
             {
-                direction = ChooseFreeWay(map.Field, location);
+                direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
             else if (direction == MoveDirection.Up &&
                 map.Field[(int)location.Y - 1, (int)location.X] is Wall)
             {
-                direction = ChooseFreeWay(map.Field, location);
+                direction = ChooseFreeWayRandom(map.Field, location, direction);
+            }
+            else if (MakeListOfFreeWays(map.Field, location).Count > 2)
+            {
+                direction = ChooseFreeWayRandom(map.Field, location, direction);
             }
         }
 
-        private MoveDirection ChooseFreeWay(FieldItem[,] field, Point point)
+        private MoveDirection ChooseFreeWayRandom(FieldItem[,] field,
+            Point point, MoveDirection direction)
+        {
+            var listOfWays = MakeListOfFreeWays(field, point);
+            listOfWays.Remove(direction);
+            var r = new Random();
+            var number = r.Next(listOfWays.Count);
+            return listOfWays.Skip(number).FirstOrDefault();
+        }
+
+        private List<MoveDirection> MakeListOfFreeWays(FieldItem[,] field,
+            Point point)
         {
             var listOfWays = new List<MoveDirection>();
             for (var i = -1; i <= 1; i++)
@@ -94,9 +109,7 @@ namespace Pacman.GameCore
                         listOfWays.Add(MakeDirection(new Point(i, j)));
                     }
                 }
-            var r = new Random();
-            var number = r.Next(listOfWays.Count);
-            return listOfWays.Skip(number).FirstOrDefault();
+            return listOfWays;
         }
 
         private MoveDirection MakeDirection(Point point)

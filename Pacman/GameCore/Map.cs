@@ -19,6 +19,7 @@ namespace Pacman.GameCore
         public Point RespawnPoint { get; private set; }
         public int EnemyCount { get; set; }
         public bool IsPlayerBoost { get; set; }
+        public bool IsAttackMode { get; set }
 
         private Dictionary<char, Func<Map, Point, FieldItem>> convertDict = 
             new Dictionary<char, Func<Map, Point, FieldItem>>()
@@ -47,6 +48,7 @@ namespace Pacman.GameCore
             HealthPoints = healthPoints;
             persons = new List<IMovable>();
             Field = CreateFieldByString(fieldString);
+            IsAttackMode = false;
         }
 
         public void Update()
