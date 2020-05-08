@@ -135,6 +135,35 @@ namespace Pacman.Tests
             map.Update();
             map.Update();
             Assert.AreEqual(finalMap, map.ToString());
+            Assert.AreEqual(2, map.HealthPoints);
+        }
+
+        [Test]
+        public static void DoesGhostChooseShortestPath()
+        {
+            var mapString = "###########\n" +
+                            "#G        #\n" +
+                            "## ###### #\n" +
+                            "## ##     #\n" +
+                            "## ## #####\n" +
+                            "## ##     #\n" +
+                            "## ###### #\n" +
+                            "##       P#\n" +
+                            "###########\n";
+            var finalMap = "###########\n" +
+                           "#         #\n" +
+                           "##G###### #\n" +
+                           "## ##     #\n" +
+                           "## ## #####\n" +
+                           "## ##     #\n" +
+                           "## ###### #\n" +
+                           "##       P#\n" +
+                           "###########";
+            var map = new Map(mapString, 3);
+            map.IsAttackMode = true;
+            map.Update(MoveDirection.Down);
+            map.Update();
+            Assert.AreEqual(finalMap, map.ToString());
         }
     }
 }
