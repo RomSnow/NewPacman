@@ -115,7 +115,9 @@ namespace Pacman.GameCore
             Point point, MoveDirection direction)
         {
             var path = Searcher.SearchWayToPlayer(field, location, map.player.GetLocation());
-            var nextStep = path.Previous.Value;
+            var pathList = path.ToList();
+            pathList.Reverse();
+            var nextStep = pathList.Skip(1).First();
             return MakeDirection(new Point(nextStep.X - location.X, nextStep.Y - location.Y));
         }
 

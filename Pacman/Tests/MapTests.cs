@@ -92,6 +92,7 @@ namespace Pacman.Tests
                            "#  P#\n" +
                            "#####";
             var map = new Map(mapString, 2);
+            map.IsAttackMode = true;
             map.Update(MoveDirection.Left);
             Assert.AreEqual(finalMap, map.ToString());
             Assert.AreEqual(1, map.HealthPoints);
@@ -108,6 +109,30 @@ namespace Pacman.Tests
                            "######";
             var map = new Map(mapString, 0);
             map.Update(MoveDirection.Right);
+            map.Update();
+            Assert.AreEqual(finalMap, map.ToString());
+        }
+
+        [Test]
+        public static void DoesAttackModeWorks()
+        {
+            var mapString = "#######\n" +
+                            "#G    #\n" +
+                            "#####P#\n" +
+                            "##R## #\n" +
+                            "#######\n";
+            var finalMap = "#######\n" +
+                           "#     #\n" +
+                           "##### #\n" +
+                           "##P##G#\n" +
+                           "#######";
+            var map = new Map(mapString, 3);
+            map.IsAttackMode = true;
+            map.Update(MoveDirection.Down);
+            map.Update();
+            map.Update();
+            map.Update();
+            map.Update();
             map.Update();
             Assert.AreEqual(finalMap, map.ToString());
         }
