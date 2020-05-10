@@ -51,14 +51,13 @@ namespace Pacman.GameCore
             Field = CreateFieldByString(fieldString);
         }
 
-        public void Update()
-        {
-            Update(player.direction);
-        }
-
-        public void Update(MoveDirection direction)
+        public void SetPlayerMoveDirection(MoveDirection direction)
         {
             player.SetMoveDirection(direction);
+        }
+
+        public void Update()
+        {
             foreach (var person in persons)
             {
                 var lastPosition = person.GetLocation();

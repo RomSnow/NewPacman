@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
@@ -62,7 +62,8 @@ namespace Pacman.Tests
                                  "#P  #\n" +
                                  "#####";
             var map = new Map(mapString, 1);
-            map.Update(MoveDirection.Left);
+            map.SetPlayerMoveDirection(MoveDirection.Left);
+            map.Update();
             map.Update();
             Assert.AreEqual(finalMapString, map.ToString());
         }
@@ -74,7 +75,8 @@ namespace Pacman.Tests
                             "#..P#\n" +
                             "#####\n";
             var map = new Map(mapString, 1);
-            map.Update(MoveDirection.Left);
+            map.SetPlayerMoveDirection(MoveDirection.Left);
+            map.Update();
             map.Update();
             Assert.AreEqual(100, map.Score);
 
@@ -93,7 +95,8 @@ namespace Pacman.Tests
                            "#####";
             var map = new Map(mapString, 2);
             map.IsAttackMode = true;
-            map.Update(MoveDirection.Left);
+            map.SetPlayerMoveDirection(MoveDirection.Left);
+            map.Update();
             Assert.AreEqual(finalMap, map.ToString());
             Assert.AreEqual(1, map.HealthPoints);
         }
@@ -108,7 +111,8 @@ namespace Pacman.Tests
                            "# .GP#\n" +
                            "######";
             var map = new Map(mapString, 0);
-            map.Update(MoveDirection.Right);
+            map.SetPlayerMoveDirection(MoveDirection.Right);
+            map.Update();
             map.Update();
             Assert.AreEqual(finalMap, map.ToString());
         }
@@ -128,7 +132,8 @@ namespace Pacman.Tests
                            "#######";
             var map = new Map(mapString, 3);
             map.IsAttackMode = true;
-            map.Update(MoveDirection.Down);
+            map.SetPlayerMoveDirection(MoveDirection.Down);
+            map.Update();
             map.Update();
             map.Update();
             map.Update();
@@ -161,7 +166,8 @@ namespace Pacman.Tests
                            "###########";
             var map = new Map(mapString, 3);
             map.IsAttackMode = true;
-            map.Update(MoveDirection.Down);
+            map.SetPlayerMoveDirection(MoveDirection.Down);
+            map.Update();
             map.Update();
             Assert.AreEqual(finalMap, map.ToString());
         }
