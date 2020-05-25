@@ -74,7 +74,7 @@ namespace Pacman
             timer.Tick += (sender, args) =>
             {
                 map.Update();
-                DrawLevel();
+                DrawLevel(progressBar);
             };
             timer.Start();
             KeyDown += (sender, args) =>
@@ -110,8 +110,9 @@ namespace Pacman
             map.SetPlayerMoveDirection(direction);
         }
 
-        private void DrawLevel()
+        private void DrawLevel(Label progressBar)
         {
+            progressBar.Text = "Lives: " + map.HealthPoints.ToString() + "\nScore: " + map.Score.ToString();
             var rowCount = map.Field.GetLength(0);
             var columnCount = map.Field.GetLength(1);
             for (var row = 0; row < rowCount; row++)
