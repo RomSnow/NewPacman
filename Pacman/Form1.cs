@@ -21,6 +21,7 @@ namespace Pacman
         private TableLayoutPanel table;
         private Image playerImage;
         private Dictionary<string, Image> images;
+        private int counter;
         public LevelForm(Map levelMap)
         {
             images = PrepareImage();
@@ -41,11 +42,18 @@ namespace Pacman
                     );
             }
 
+            var gameOverBar = new Label
+            {
+                Location = new Point(0, 0),
+                Size = new Size(100, 100),
+                Text = "GAME OVER!"
+            };
+
             var progressBar = new Label
             {
                 Location = new Point(0, 0),
                 Size = new Size(ClientSize.Width, 30),
-                Text = "Lives: " + map.HealthPoints.ToString() + "\nScore: " + map.Score.ToString()
+                Text = "Lives: " + map.HealthPoints.ToString() + "; Score: " + map.Score.ToString() + "; Iteration: " + counter.ToString()
             };
 
             for (var row = 0; row < rowCount; row++)
@@ -85,6 +93,11 @@ namespace Pacman
             {
                 map.Update();
                 DrawLevel(progressBar);
+                if (map.HealthPoints == 0)
+                {
+                    Controls.Add(gameOverBar);
+                    timer.Stop(); ///ДАВАЙ РОМА!!!!
+                }
             };
             timer.Start();
             KeyDown += (sender, args) =>
@@ -140,7 +153,12 @@ namespace Pacman
 
         private void DrawLevel(Label progressBar)
         {
-            progressBar.Text = "Lives: " + map.HealthPoints.ToString() + "\nScore: " + map.Score.ToString();
+            counter++;
+            if (counter % 30 == 0 && map.IsAttackMode == false)
+                map.IsAttackMode = true;
+            else if (counter % 30 == 0)
+                map.IsAttackMode = false;
+            progressBar.Text = "Lives: " + map.HealthPoints.ToString() + "; Score: " + map.Score.ToString() + "; Iteration: " + counter.ToString();
             var rowCount = map.Field.GetLength(0);
             var columnCount = map.Field.GetLength(1);
             for (var row = 0; row < rowCount; row++)
