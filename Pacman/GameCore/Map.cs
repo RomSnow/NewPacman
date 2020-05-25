@@ -124,6 +124,12 @@ namespace Pacman.GameCore
                 
         }
 
+        public void KillEnemy(FieldItem ghost)
+        {
+            EnemyCount--;
+            persons.Remove((IMovable)ghost);
+        }
+
         public override string ToString() 
         {
             var fieldString = "";
