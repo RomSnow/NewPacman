@@ -39,7 +39,7 @@ namespace Pacman
             {
                 Location = new Point(0, 0),
                 Size = new Size(ClientSize.Width, 30),
-                Text = "Lives: " + map.HealthPoints.ToString() + "\n Score: " + map.Score.ToString()
+                Text = "Lives: " + map.HealthPoints.ToString() + "\nScore: " + map.Score.ToString()
             };
 
             for (var row = 0; row < rowCount; row++)
