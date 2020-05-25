@@ -19,7 +19,7 @@ namespace Pacman
             // Application.SetHighDpiMode(HighDpiMode.SystemAware);
             // Application.EnableVisualStyles();
             // Application.SetCompatibleTextRenderingDefault(false);
-            var map = new Map("#####\n#...#\n#.P.#\n#...#\n#####", 3);
+            var map = new Map("#####\n#...#\n#.P.#\n#..G#\n#####", 3);
             Application.Run(new LevelForm(map)
             {
                 ClientSize = new Size(500, 400)
