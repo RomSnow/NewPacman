@@ -156,6 +156,7 @@ namespace Pacman.GameCore
                 IsGhostAlive = false;
                 map.Field[location.Y, location.X] = obj;
                 map.Score += 200;
+                map.KillEnemy(this);
             }
             else if (obj is Player && !map.IsPlayerBoost && IsGhostAlive)
             {

@@ -53,6 +53,10 @@ namespace Pacman
                     image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\ghost.png");
                 else if (map.Field[row, column] is Wall)
                     image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\квадрат.png");
+                else if (map.Field[row, column] is Coin)
+                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\coin.png");
+                else if (map.Field[row, column] is BigCoin)
+                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\bigCoin.png");
                 else
                     image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\white_square.jpg");
 
@@ -126,6 +130,10 @@ namespace Pacman
                     image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\ghost.png");
                 else if (map.Field[row, column] is Wall)
                     image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\квадрат.png");
+                else if (map.Field[row, column] is Coin)
+                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\coin.png");
+                else if (map.Field[row, column] is BigCoin)
+                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\bigCoin.png");
                 else
                     image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\white_square.jpg");
 

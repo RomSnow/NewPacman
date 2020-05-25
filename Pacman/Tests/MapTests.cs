@@ -144,6 +144,26 @@ namespace Pacman.Tests
         }
 
         [Test]
+        public static void DoesPlayerBoostWorks()
+        {
+            var mapString = "#######\n" +
+                            "#G  *P#\n" +
+                            "#######";
+            var finalMap = "#######\n" +
+                           "#P    #\n" +
+                           "#######";
+            var map = new Map(mapString, 3);
+            map.IsPlayerBoost = true;
+            map.SetPlayerMoveDirection(MoveDirection.Left);
+            map.Update();
+            map.Update();
+            map.Update();
+            map.Update();
+            Assert.AreEqual(finalMap, map.ToString());
+            Assert.AreEqual(3, map.HealthPoints);
+        }
+
+        [Test]
         public static void DoesGhostChooseShortestPath()
         {
             var mapString = "###########\n" +

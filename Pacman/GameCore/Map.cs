@@ -45,6 +45,7 @@ namespace Pacman.GameCore
             BigCoinsLocations = new HashSet<Point>();
             IsAttackMode = false;
             IsGameOver = false;
+            IsPlayerBoost = false;
             Score = 0;
             HealthPoints = healthPoints;
             persons = new List<IMovable>();

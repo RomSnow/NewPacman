@@ -10,7 +10,7 @@ namespace Pacman.GameCore
         public MoveDirection direction;
         public Point location;
         private Map map;
-        private int timeToEndboost;
+        public int timeToEndboost;
         private HashSet<Point> coinsLocations;
         private HashSet<Point> bigCoinsLocations;
 
@@ -99,6 +99,7 @@ namespace Pacman.GameCore
                     map.Score += 200;
                     ghost.IsGhostAlive = false;
                     map.Field[location.Y, location.X] = this;
+                    map.KillEnemy(obj);
                 }
             }
         }
