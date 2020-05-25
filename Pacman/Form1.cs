@@ -93,7 +93,7 @@ namespace Pacman
             {
                 map.Update();
                 DrawLevel(progressBar);
-                if (map.HealthPoints == 0)
+                if (map.IsGameOver)
                 {
                     Controls.Add(gameOverBar);
                     timer.Stop(); ///ДАВАЙ РОМА!!!!
