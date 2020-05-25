@@ -83,7 +83,7 @@ namespace Pacman.GameCore
                         Field[(int)lastPosition.Y, (int)lastPosition.X] = new BigCoin(this, lastPosition);
                     }
                 }
-                if (HealthPoints == 0 || EnemyCount == 0)
+                if (HealthPoints == 0 || EnemyCount == 0 || CoinsLocations.Count == 0)
                 {
                     IsGameOver = true;
                     return;
