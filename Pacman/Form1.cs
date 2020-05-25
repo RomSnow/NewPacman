@@ -63,8 +63,10 @@ namespace Pacman
 
                 if (map.Field[row, column] is Player)
                     image = playerImage;
-                else if (map.Field[row, column] is Ghost)
+                else if (map.Field[row, column] is Ghost && !map.IsPlayerBoost)
                     image = images["ghost.png"];
+                else if (map.Field[row, column] is Ghost && map.IsPlayerBoost)
+                    image = images["ghost-sad.png"];
                 else if (map.Field[row, column] is Wall)
                     image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
@@ -168,8 +170,10 @@ namespace Pacman
 
                 if (map.Field[row, column] is Player)
                     image = playerImage;
-                else if (map.Field[row, column] is Ghost)
+                else if (map.Field[row, column] is Ghost && !map.IsPlayerBoost)
                     image = images["ghost.png"];
+                else if (map.Field[row, column] is Ghost && map.IsPlayerBoost)
+                    image = images["ghost-sad.png"];
                 else if (map.Field[row, column] is Wall)
                     image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
