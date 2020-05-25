@@ -42,13 +42,6 @@ namespace Pacman
                     );
             }
 
-            var gameOverBar = new Label
-            {
-                Location = new Point(0, 0),
-                Size = new Size(100, 100),
-                Text = "GAME OVER!"
-            };
-
             var progressBar = new Label
             {
                 Location = new Point(0, 0),
@@ -97,8 +90,12 @@ namespace Pacman
                 DrawLevel(progressBar);
                 if (map.IsGameOver)
                 {
-                    Controls.Add(gameOverBar);
-                    timer.Stop(); ///ДАВАЙ РОМА!!!!
+                    timer.Stop();
+                    DialogResult result = MessageBox.Show("Game over!\nYour score: " + map.Score, "PACMAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (result == DialogResult.OK)
+                    {
+                        Close();
+                    }
                 }
             };
             timer.Start();
