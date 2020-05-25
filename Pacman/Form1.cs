@@ -11,12 +11,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Pacman.GameCore;
 
 namespace Pacman
 {
     public partial class LevelForm : Form
     {
+        private Map startMap;
         private Map map;
         private TableLayoutPanel table;
         private Image playerImage;
@@ -56,10 +58,8 @@ namespace Pacman
 
                 if (map.Field[row, column] is Player)
                     image = playerImage;
-                else if (map.Field[row, column] is Ghost && !map.IsPlayerBoost)
+                else if (map.Field[row, column] is Ghost)
                     image = images["ghost.png"];
-                else if (map.Field[row, column] is Ghost && map.IsPlayerBoost)
-                    image = images["ghost-sad.png"];
                 else if (map.Field[row, column] is Wall)
                     image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
@@ -82,7 +82,7 @@ namespace Pacman
             table.Dock = DockStyle.Fill;
             Controls.Add(progressBar);
             Controls.Add(table);
-            
+
             var timer = new Timer() {Interval = 100};
             timer.Tick += (sender, args) =>
             {
@@ -91,10 +91,20 @@ namespace Pacman
                 if (map.IsGameOver)
                 {
                     timer.Stop();
-                    DialogResult result = MessageBox.Show("Game over!\nYour score: " + map.Score, "PACMAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (result == DialogResult.OK)
+                    var answer = MessageBox.Show(
+                        "Перезапустить уровень?",
+                        "GAME OVER",
+                        MessageBoxButtons.YesNo);
+
+                    if (answer == DialogResult.Yes)
                     {
-                        Close();
+                        var startMap = map.GetStartMap();
+                        map = new Map(startMap.Item1, startMap.Item2);
+                        timer.Start();
+                    }
+                    else
+                    {
+                        Close();   
                     }
                 }
             };
@@ -167,10 +177,8 @@ namespace Pacman
 
                 if (map.Field[row, column] is Player)
                     image = playerImage;
-                else if (map.Field[row, column] is Ghost && !map.IsPlayerBoost)
+                else if (map.Field[row, column] is Ghost)
                     image = images["ghost.png"];
-                else if (map.Field[row, column] is Ghost && map.IsPlayerBoost)
-                    image = images["ghost-sad.png"];
                 else if (map.Field[row, column] is Wall)
                     image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)

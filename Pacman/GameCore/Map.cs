@@ -38,10 +38,15 @@ namespace Pacman.GameCore
 
         private List<IMovable> persons;
 
+        private string startMap;
+        private int startHP;
+
         public Map() { }
 
         public Map(string fieldString, int healthPoints)
         {
+            startMap = fieldString;
+            startHP = healthPoints;
             CoinsLocations = new HashSet<Point>();
             BigCoinsLocations = new HashSet<Point>();
             IsAttackMode = false;
@@ -132,6 +137,11 @@ namespace Pacman.GameCore
         {
             EnemyCount--;
             persons.Remove((IMovable)ghost);
+        }
+
+        public Tuple<string, int> GetStartMap()
+        {
+            return Tuple.Create(startMap, startHP);
         }
 
         public override string ToString() 
