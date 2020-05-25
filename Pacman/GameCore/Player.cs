@@ -82,6 +82,7 @@ namespace Pacman.GameCore
                 map.Score += 200;
                 bigCoinsLocations.Remove(location);
                 map.IsPlayerBoost = true;
+                map.IsAttackMode = false;
                 timeToEndboost = 10;
             }
             if (obj is Ghost)
