@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows;
 using System.Linq;
 using System.Text;
+using NUnit.Framework;
 
 namespace Pacman.GameCore
 {
@@ -59,7 +60,8 @@ namespace Pacman.GameCore
 
         public void Update()
         {
-            foreach (var person in persons)
+            var localPersons = new List<IMovable>(persons);
+            foreach (var person in localPersons.Where(p => p != null))
             {
                 var lastPosition = person.GetLocation();
                 person.Move(out var collisionItem);
@@ -82,6 +84,8 @@ namespace Pacman.GameCore
                     return;
                 }
             }
+
+            persons = persons.Where(p => p != null).ToList();
         }
 
         private FieldItem[,] CreateFieldByString(string fieldString)
