@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,9 +19,12 @@ namespace Pacman
     {
         private Map map;
         private TableLayoutPanel table;
-        private string pathToPlayerImage = @"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\pacman-left.png";
+        private Image playerImage;
+        private Dictionary<string, Image> images;
         public LevelForm(Map levelMap)
         {
+            images = PrepareImage();
+            playerImage = images["pacman-left.png"];
             map = levelMap;
             table = new TableLayoutPanel();
             var rowCount = map.Field.GetLength(0);
@@ -48,17 +54,17 @@ namespace Pacman
                 Image image;
 
                 if (map.Field[row, column] is Player)
-                    image = Image.FromFile(pathToPlayerImage);
+                    image = playerImage;
                 else if (map.Field[row, column] is Ghost)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\ghost.png");
+                    image = images["ghost.png"];
                 else if (map.Field[row, column] is Wall)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\квадрат.png");
+                    image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\coin.png");
+                    image = images["coin.png"];
                 else if (map.Field[row, column] is BigCoin)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\bigCoin.png");
+                    image = images["bigCoin.png"];
                 else
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\white_square.jpg");
+                    image = images["white_square.png"];
 
                 var picture = new PictureBox()
                 {
@@ -88,27 +94,45 @@ namespace Pacman
 
         }
 
+        public Dictionary<string, Image> PrepareImage()
+        {
+            var result = new Dictionary<string, Image>();
+            var helpDir = Directory.GetCurrentDirectory();
+            for (int j = 0; j < 2; j++)
+            {
+                while (helpDir[helpDir.Length - 1] != '\\')
+                    helpDir = helpDir.Substring(0, helpDir.Length - 2);
+                helpDir.Substring(0, helpDir.Length - 2);
+            }
+            var imagesDir = new DirectoryInfo(helpDir + @"Pacman\Sprites");
+            foreach (var file in imagesDir.GetFiles("*.png"))
+            {
+                result.Add(file.Name, Image.FromFile(file.FullName));
+            }
+            return result;
+        }
+
         private void KeyHandler(KeyEventArgs eventArgs)
         {
             var direction = MoveDirection.Down;
             if (eventArgs.KeyCode == Keys.A)
             {
-                pathToPlayerImage = @"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\pacman-left.png";
+                playerImage = images["pacman-left.png"];
                 direction = MoveDirection.Left;
             }
             else if (eventArgs.KeyCode == Keys.W)
             {
-                pathToPlayerImage = @"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\pacman-up.png";
+                playerImage = images["pacman-up.png"];
                 direction = MoveDirection.Up;
             }
             else if (eventArgs.KeyCode == Keys.S)
             {
-                pathToPlayerImage = @"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\pacman-down.png";
+                playerImage = images["pacman-down.png"];
                 direction = MoveDirection.Down;
             }
             else if (eventArgs.KeyCode == Keys.D)
             {
-                pathToPlayerImage = @"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\pacman-right.png";
+                playerImage = images["pacman-right.png"];
                 direction = MoveDirection.Right;
             }
             map.SetPlayerMoveDirection(direction);
@@ -125,17 +149,17 @@ namespace Pacman
                 Image image;
 
                 if (map.Field[row, column] is Player)
-                    image = Image.FromFile(pathToPlayerImage);
+                    image = playerImage;
                 else if (map.Field[row, column] is Ghost)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\ghost.png");
+                    image = images["ghost.png"];
                 else if (map.Field[row, column] is Wall)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\квадрат.png");
+                    image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\coin.png");
+                    image = images["coin.png"];
                 else if (map.Field[row, column] is BigCoin)
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\bigCoin.png");
+                    image = images["bigCoin.png"];
                 else
-                    image = Image.FromFile(@"C:\Users\20kol\source\repos\NewPacman\Pacman\Sprites\white_square.jpg");
+                    image = images["white_square.png"];
 
                 ((PictureBox) table.GetControlFromPosition(column, row)).Image = image;
 
