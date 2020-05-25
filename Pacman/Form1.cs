@@ -89,12 +89,12 @@ namespace Pacman
                 if (map.IsGameOver)
                 {
                     timer.Stop();
-                    DialogResult result = MessageBox.Show("Game over!\nYour score: " + map.Score,
-                        "PACMAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (result == DialogResult.OK)
+                    Form GameOver = new GameOverMenu(map)
                     {
-                        Close();
-                    }
+                        ClientSize = new Size(500, 300)
+                    };
+                    GameOver.ShowDialog();
+                    Close();
                 }
             };
             timer.Start();
