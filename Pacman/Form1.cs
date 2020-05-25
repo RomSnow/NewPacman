@@ -56,10 +56,8 @@ namespace Pacman
 
                 if (map.Field[row, column] is Player)
                     image = playerImage;
-                else if (map.Field[row, column] is Ghost && !map.IsPlayerBoost)
+                else if (map.Field[row, column] is Ghost)
                     image = images["ghost.png"];
-                else if (map.Field[row, column] is Ghost && map.IsPlayerBoost)
-                    image = images["ghost-sad.png"];
                 else if (map.Field[row, column] is Wall)
                     image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
@@ -91,7 +89,8 @@ namespace Pacman
                 if (map.IsGameOver)
                 {
                     timer.Stop();
-                    DialogResult result = MessageBox.Show("Game over!\nYour score: " + map.Score, "PACMAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult result = MessageBox.Show("Game over!\nYour score: " + map.Score,
+                        "PACMAN", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (result == DialogResult.OK)
                     {
                         Close();
@@ -129,22 +128,34 @@ namespace Pacman
             var direction = MoveDirection.Down;
             if (eventArgs.KeyCode == Keys.A)
             {
-                playerImage = images["pacman-left.png"];
+                if (!map.IsPlayerBoost)
+                    playerImage = images["pacman-left.png"];
+                else
+                    playerImage = images["pacman-left-angry.png"];
                 direction = MoveDirection.Left;
             }
             else if (eventArgs.KeyCode == Keys.W)
             {
-                playerImage = images["pacman-up.png"];
+                if (!map.IsPlayerBoost)
+                    playerImage = images["pacman-up.png"];
+                else
+                    playerImage = images["pacman-up-angry.png"];
                 direction = MoveDirection.Up;
             }
             else if (eventArgs.KeyCode == Keys.S)
             {
-                playerImage = images["pacman-down.png"];
+                if (!map.IsPlayerBoost)
+                    playerImage = images["pacman-down.png"];
+                else
+                    playerImage = images["pacman-down-angry.png"];
                 direction = MoveDirection.Down;
             }
             else if (eventArgs.KeyCode == Keys.D)
             {
-                playerImage = images["pacman-right.png"];
+                if (!map.IsPlayerBoost)
+                    playerImage = images["pacman-right.png"];
+                else
+                    playerImage = images["pacman-right-angry.png"];
                 direction = MoveDirection.Right;
             }
             map.SetPlayerMoveDirection(direction);
@@ -167,10 +178,8 @@ namespace Pacman
 
                 if (map.Field[row, column] is Player)
                     image = playerImage;
-                else if (map.Field[row, column] is Ghost && !map.IsPlayerBoost)
+                else if (map.Field[row, column] is Ghost)
                     image = images["ghost.png"];
-                else if (map.Field[row, column] is Ghost && map.IsPlayerBoost)
-                    image = images["ghost-sad.png"];
                 else if (map.Field[row, column] is Wall)
                     image = images["квадрат.png"];
                 else if (map.Field[row, column] is Coin)
