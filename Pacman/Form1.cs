@@ -74,7 +74,7 @@ namespace Pacman
             Controls.Add(progressBar);
             Controls.Add(table);
             
-            var timer = new Timer() {Interval = 400};
+            var timer = new Timer() {Interval = 100};
             timer.Tick += (sender, args) =>
             {
                 map.Update();
