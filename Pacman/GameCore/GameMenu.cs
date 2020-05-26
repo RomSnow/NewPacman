@@ -66,7 +66,7 @@ namespace Pacman.GameCore
             {
                 ClientSize = new Size(1000, 800)
             };
-            Game.Show();
+            Game.ShowDialog();
         }
     }
 }
