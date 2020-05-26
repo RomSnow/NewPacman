@@ -66,7 +66,15 @@ namespace Pacman.GameCore
             {
                 ClientSize = new Size(1000, 800)
             };
-            Game.ShowDialog();
+            var r = Game.ShowDialog();
+            if (r == DialogResult.OK)
+            {
+                Form GameOver = new GameOverMenu(gameMap)
+                {
+                    ClientSize = new Size(500, 300)
+                };
+                GameOver.ShowDialog();
+            }
         }
     }
 }

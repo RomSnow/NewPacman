@@ -82,11 +82,7 @@ namespace Pacman
                 if (map.IsGameOver)
                 {
                     timer.Stop();
-                    Form GameOver = new GameOverMenu(map)
-                    {
-                        ClientSize = new Size(500, 300)
-                    };
-                    GameOver.ShowDialog();
+                    this.DialogResult = DialogResult.OK;
                     Close();
                 }
             };
